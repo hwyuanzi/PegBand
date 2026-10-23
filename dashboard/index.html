@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PegBand</title>
+<style>
+  :root {
+    --bg: #11131a; --panel: #1a1d27; --line: #2c3040; --ink: #e8eaf2; --dim: #9aa0b5;
+    --green: #35c47a; --blue: #4d8dff; --gold: #ffcf5c; --bad: #ff8a8a; --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.55 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header {
+    padding: 16px 22px; border-bottom: 1px solid var(--line); background: var(--panel);
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  }
+  header h1 { margin: 0; font-size: 18px; letter-spacing: .3px; }
+  header .sub { color: var(--dim); font-size: 13px; }
+  main { max-width: 1120px; margin: 0 auto; padding: 20px 22px 60px; }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+          margin-bottom: 18px; }
+  .card > h2 {
+    margin: 0; padding: 12px 16px; font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--dim); border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .card > h2 .n {
+    width: 20px; height: 20px; border-radius: 50%; background: #262a38; color: var(--ink);
+    display: grid; place-items: center; font-size: 11px; letter-spacing: 0;
+  }
+  .card .body { padding: 16px; }
+  .hint { color: var(--dim); font-size: 13px; margin: 0 0 12px; }
+
+  button {
+    background: #262a38; color: var(--ink); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 13px; font: inherit; cursor: pointer;
+  }
+  button:hover:not(:disabled) { background: #30354a; }
+  button:disabled { opacity: .4; cursor: default; }
+  button.primary { background: var(--green); border-color: var(--green); color: #07130c; font-weight: 600; }
+  button.primary:hover:not(:disabled) { filter: brightness(1.08); background: var(--green); }
+  button.danger { color: var(--bad); }
+  .row { display: flex; gap: 9px; flex-wrap: wrap; align-items: center; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--dim); font-weight: 500; font-size: 12px; }
+  td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  tr:last-child td { border-bottom: none; }
+
+  select, input[type=text], input[type=number] {
+    background: #14161f; color: var(--ink); border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 9px; font: inherit;
+  }
+  input[type=number] { width: 74px; }
+  label.small { color: var(--dim); font-size: 12px; display: flex; align-items: center; gap: 6px; }
+
+  .pairing { display: grid; grid-template-columns: 1fr auto 1fr 1.1fr auto; gap: 9px;
+             align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); }
+  .pairing:last-of-type { border-bottom: none; }
+  .pairing .mid { color: var(--dim); font-size: 12px; }
+  @media (max-width: 760px) { .pairing { grid-template-columns: 1fr; } }
+
+  .status { padding: 11px 16px; border-top: 1px solid var(--line); color: var(--dim); font-size: 13px; }
+  .status.run { color: var(--gold); }
+  .err { color: var(--bad); }
+  .win { color: var(--gold); font-weight: 600; }
+  a { color: var(--blue); }
+  iframe { width: 100%; height: 760px; border: 0; border-radius: 0 0 var(--radius) var(--radius);
+           display: block; background: var(--bg); }
+  .pill { font-size: 11px; color: var(--dim); border: 1px solid var(--line); border-radius: 99px;
+          padding: 1px 8px; }
+  .warn { color: var(--gold); font-size: 12px; }
+  .dim { color: var(--dim); }
+  /* The G or B after a score is the colour that team played in that game. */
+  .as { font-size: 10px; font-weight: 700; margin-left: 2px; vertical-align: 1px; }
+  .asg { color: var(--green); } .asb { color: var(--blue); }
+  td .w { color: var(--gold); font-weight: 600; }
+  .pill.bad { color: var(--bad); border-color: var(--bad); }
+</style>
+</head>
+<body>
+<header>
+  <h1>PegBand</h1>
+  <span class="sub">architecture &amp; tournament referee</span>
+</header>
+
+<main>
+  <!-- 1. Bots -->
+  <div class="card">
+    <h2><span class="n">1</span> Bots</h2>
+    <div class="body">
+      <p class="hint">Read from <code>bots.json</code>, plus any folder dropped into <code>bots/</code>
+        that holds a <code>bot.py</code>, <code>bot.cpp</code> or <code>bot.jl</code>.</p>
+      <table id="bots"><tbody></tbody></table>
+      <div class="row" style="margin-top:12px">
+        <button id="rescan">Rescan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Parameters -->
+  <div class="card">
+    <h2><span class="n">2</span> Parameters</h2>
+    <div class="body">
+      <p class="hint">Each file holds the board side <b>N</b>, the <b>pegs</b> each player places and
+        the <b>rubberbands</b> each player may lay down. The spec allows N up to 50, at most 20 pegs,
+        and no more rubberbands than pegs.</p>
+      <table id="params"><tbody></tbody></table>
+      <div class="row" style="margin-top:12px">
+        <input type="text" id="pname" placeholder="file name" size="14">
+        <label class="small">N <input type="number" id="pn" value="20" min="2" max="50"></label>
+        <label class="small">pegs <input type="number" id="pk" value="8" min="1" max="20"></label>
+        <label class="small">bands <input type="number" id="pr" value="6" min="1" max="20"></label>
+        <button id="addparam">Save file</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Pairings -->
+  <div class="card">
+    <h2><span class="n">3</span> Pairings</h2>
+    <div class="body">
+      <p class="hint">Each pairing is two games with the same parameters:
+        <b style="color:var(--green)">Green</b> places first and wins a tie,
+        <b style="color:var(--blue)">Blue</b> places second. Bot 1 is Green in game 1 and Blue in
+        game 2, so each bot plays each colour once. A team's score is its points over both games
+        added together, and the higher total wins the pairing.</p>
+      <div id="pairings"></div>
+      <div class="row" style="margin-top:12px">
+        <button id="addpair">Add pairing</button>
+        <button id="everypair">Every pair</button>
+        <button id="clearpairs">Clear</button>
+        <span style="flex:1"></span>
+        <label class="small">seconds per bot per game
+          <input type="number" id="clock" value="120" min="1" max="3600"></label>
+        <label class="small">watching pace
+          <input type="number" id="pace" value="300" min="0" max="3000" step="50"> ms/move</label>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="primary" id="start">Start tournament</button>
+        <button id="stop" disabled>Stop</button>
+      </div>
+    </div>
+    <div class="status" id="status">Choose bots and pairings, then start.</div>
+  </div>
+
+  <!-- Live -->
+  <div class="card" id="livecard" style="display:none">
+    <h2>Playing now</h2>
+    <iframe id="liveframe" src="/live"></iframe>
+  </div>
+
+  <!-- Results -->
+  <div class="card">
+    <h2>Results</h2>
+    <div class="body">
+      <table id="results"><tbody></tbody></table>
+      <div id="table" style="margin-top:18px"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="danger" id="clearres">Clear results</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+let setup = {bots: [], params: []};
+let pairs = [];
+
+const esc = t => { const d = document.createElement('div'); d.textContent = t ?? ''; return d.innerHTML; };
+
+async function get(url) { const r = await fetch(url); if (!r.ok) throw new Error((await r.json()).error); return r.json(); }
+async function post(url, body) {
+  const r = await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'},
+                              body: JSON.stringify(body || {})});
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || 'failed');
+  return j;
+}
+
+// ------------------------------------------------------------------ setup
+
+async function loadSetup() {
+  setup = await get('/api/setup');
+  const bt = $('bots').querySelector('tbody');
+  bt.innerHTML = setup.bots.map(b => `<tr><td>${esc(b.name)}</td></tr>`).join('')
+    || '<tr><td class="dim">No bots found. Put one in bots/.</td></tr>';
+  const pt = $('params').querySelector('tbody');
+  pt.innerHTML = setup.params.map(p => {
+    if (p.error) return `<tr><td>${esc(p.name)}</td><td class="err" colspan="3">${esc(p.error)}</td></tr>`;
+    const w = p.warning ? ` <span class="warn">${esc(p.warning)}</span>` : '';
+    return `<tr><td>${esc(p.name)}</td><td class="num">N=${p.N}</td>` +
+           `<td class="num">${p.pegs} pegs</td><td class="num">${p.bands} bands${w}</td></tr>`;
+  }).join('') || '<tr><td>No parameter files in params/.</td></tr>';
+  if (!pairs.length) addPair();
+  else drawPairs();
+}
+
+// --------------------------------------------------------------- pairings
+
+function paramOptions(sel) {
+  const ok = setup.params.filter(p => !p.error);
+  return ok.map(p => `<option value="${esc(p.file)}" ${p.file === sel ? 'selected' : ''}>` +
+                     `${esc(p.name)} (N=${p.N}, ${p.pegs} pegs, ${p.bands} bands)</option>`).join('');
+}
+
+function botOptions(sel) {
+  return setup.bots.map(b => `<option value="${esc(b.key)}" ${b.key === sel ? 'selected' : ''}>` +
+                             `${esc(b.name)}</option>`).join('');
+}
+
+function addPair(a, b, config) {
+  const names = setup.bots.map(x => x.key);
+  pairs.push({a: a ?? names[0], b: b ?? names[1] ?? names[0],
+              config: config ?? (setup.params.find(p => !p.error) || {}).file});
+  drawPairs();
+}
+
+function drawPairs() {
+  $('pairings').innerHTML = pairs.map((p, i) => `
+    <div class="pairing">
+      <select data-i="${i}" data-k="a">${botOptions(p.a)}</select>
+      <span class="mid">vs</span>
+      <select data-i="${i}" data-k="b">${botOptions(p.b)}</select>
+      <select data-i="${i}" data-k="config">${paramOptions(p.config)}</select>
+      <button data-del="${i}">✕</button>
+    </div>`).join('') || '<p class="hint">No pairings yet.</p>';
+  $('pairings').querySelectorAll('select').forEach(s => {
+    s.onchange = e => { pairs[+e.target.dataset.i][e.target.dataset.k] = e.target.value; };
+  });
+  $('pairings').querySelectorAll('[data-del]').forEach(b => {
+    b.onclick = e => { pairs.splice(+e.target.dataset.del, 1); drawPairs(); };
+  });
+}
+
+$('addpair').onclick = () => addPair();
+$('clearpairs').onclick = () => { pairs = []; drawPairs(); };
+$('everypair').onclick = () => {
+  const names = setup.bots.map(b => b.key);
+  const cfg = (setup.params.find(p => !p.error) || {}).file;
+  pairs = [];
+  for (let i = 0; i < names.length; i++)
+    for (let j = i + 1; j < names.length; j++) pairs.push({a: names[i], b: names[j], config: cfg});
+  drawPairs();
+};
+$('rescan').onclick = () => loadSetup();
+
+$('addparam').onclick = async () => {
+  try {
+    await post('/api/params', {name: $('pname').value, N: +$('pn').value,
+                               pegs: +$('pk').value, bands: +$('pr').value});
+    $('pname').value = '';
+    await loadSetup();
+  } catch (e) { alert(e.message); }
+};
+
+// ---------------------------------------------------------------- running
+
+$('start').onclick = async () => {
+  try {
+    await post('/api/start', {pairings: pairs, pace: +$('pace').value, clock: +$('clock').value});
+  } catch (e) { alert(e.message); }
+};
+$('stop').onclick = () => post('/api/stop').catch(() => {});
+$('clearres').onclick = async () => {
+  if (!confirm('Clear every saved result? A backup file is kept.')) return;
+  try { await post('/api/clear'); } catch (e) { alert(e.message); }
+};
+$('pace').onchange = () => post('/api/pace', {pace: +$('pace').value}).catch(() => {});
+
+// ---------------------------------------------------------------- results
+
+function drawResults(st) {
+  const rows = st.pairings || [];
+  const body = $('results').querySelector('tbody');
+  body.innerHTML = ['<tr><th>Pairing</th><th>Parameters</th><th class="num">Game 1</th>' +
+                    '<th class="num">Game 2</th><th class="num">Total</th><th>Winner</th><th></th></tr>']
+    .concat(rows.map((p, i) => {
+      const [a, b] = p.bots;
+      const cfg = p.config ? p.config.replace(/^params\//, '').replace(/\.txt$/, '')
+                           : (p.params ? `N=${p.params.N} ${p.params.pegs}p ${p.params.bands}b` : '');
+      if (p.error) return `<tr><td>${esc(a)} vs ${esc(b)}</td><td>${esc(cfg)}</td>` +
+                          `<td colspan="5" class="err">${esc(p.error)}</td></tr>`;
+      if (!p.totals) {
+        const now = st.current === i ? '<span class="pill">playing…</span>' : '<span class="pill">queued</span>';
+        return `<tr><td>${esc(a)} vs ${esc(b)}</td><td>${esc(cfg)}</td><td colspan="5">${now}</td></tr>`;
+      }
+      const g = p.games || [];
+      // Both teams' points, each tagged with the colour played. The game's winner is in gold.
+      const cell = i => {
+        const x = g[i];
+        if (!x || !x.scores) return '<span class="dim">–</span>';
+        const [sg, sb] = x.scores;
+        const aGreen = x.green === a;
+        const pa = aGreen ? sg : sb, pb = aGreen ? sb : sg;
+        const aWon = pa > pb || (pa === pb && aGreen);        // Green takes a tie
+        const tag = who => `<span class="as ${who === 'g' ? 'asg' : 'asb'}">${who === 'g' ? 'G' : 'B'}</span>`;
+        return `<span class="${aWon ? 'w' : ''}">${pa}${tag(aGreen ? 'g' : 'b')}</span>` +
+               ` – <span class="${aWon ? '' : 'w'}">${pb}${tag(aGreen ? 'b' : 'g')}</span>`;
+      };
+      const ta = p.totals[a], tb = p.totals[b];
+      const forfeit = g.some(x => (x.errors || []).some(Boolean));
+      return `<tr><td>${esc(a)} <span class="dim">vs</span> ${esc(b)}</td><td>${esc(cfg)}</td>` +
+             `<td class="num">${cell(0)}</td><td class="num">${cell(1)}</td>` +
+             `<td class="num"><b>${ta} – ${tb}</b></td>` +
+             `<td class="win">${esc(p.winner || 'tie')}` +
+             `${p.winner ? ` <span class="dim">+${Math.abs(ta - tb)}</span>` : ''}` +
+             `${forfeit ? ' <span class="pill bad">forfeit</span>' : ''}</td>` +
+             `<td>${p.replay ? `<a href="${esc(p.replay)}" target="_blank">replay</a>`
+                      : p.replay_missing ? '<span class="dim" title="results/ was cleared">replay deleted</span>' : ''}</td></tr>`;
+    })).join('');
+  if (!rows.length) body.innerHTML = '<tr><td>Nothing yet.</td></tr>';
+
+  // The standings: points summed over every finished pairing.
+  const pts = {}, played = {};
+  rows.forEach(p => {
+    if (!p.totals) return;
+    p.bots.forEach(n => { pts[n] = (pts[n] || 0) + (p.totals[n] || 0); played[n] = (played[n] || 0) + 1; });
+  });
+  const names = Object.keys(pts).sort((x, y) => pts[y] - pts[x]);
+  $('table').innerHTML = names.length
+    ? '<table><tbody><tr><th>Standings</th><th class="num">pairings</th><th class="num">points</th></tr>' +
+      names.map(n => `<tr><td>${esc(n)}</td><td class="num">${played[n]}</td>` +
+                     `<td class="num">${pts[n]}</td></tr>`).join('') + '</tbody></table>'
+    : '';
+}
+
+async function poll() {
+  try {
+    const st = await get('/api/state');
+    const running = st.status === 'running';
+    $('status').textContent = st.message || '';
+    $('status').classList.toggle('run', running);
+    $('start').disabled = running;
+    $('stop').disabled = !running;
+    $('livecard').style.display = running ? '' : 'none';
+    drawResults(st);
+  } catch (e) { /* the server may be busy */ }
+}
+
+loadSetup().then(poll);
+setInterval(poll, 700);
+</script>
+</body>
+</html>

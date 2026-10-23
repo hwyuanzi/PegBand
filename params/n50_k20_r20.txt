@@ -1,0 +1,4 @@
+# N (board side), pegs each, rubberbands each
+50
+20
+20

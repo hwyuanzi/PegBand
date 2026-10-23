@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+results/
+bots.local.json
+bots/*/
+!bots/samples/
+!bots/templates/
+bots/samples/*/bot
+bots/samples/*/bot.exe

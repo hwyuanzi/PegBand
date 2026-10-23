@@ -1,0 +1,5 @@
+[
+  {"name": "Spread (Python)", "cwd": "bots/samples/spread-python", "command": ["{python}", "bot.py"]},
+  {"name": "Greedy (Python)", "cwd": "bots/samples/greedy-python", "command": ["{python}", "bot.py"]},
+  {"name": "Random (Python)", "cwd": "bots/samples/random-python", "command": ["{python}", "bot.py"]}
+]
