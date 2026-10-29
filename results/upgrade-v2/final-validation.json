@@ -1,0 +1,30 @@
+{
+  "checked_utc": "2026-10-29T17:45:24.825911+00:00",
+  "unit_test_command": "python3 -m unittest discover -s tests -t .",
+  "unit_tests_passed": 51,
+  "matches": 21,
+  "games": 42,
+  "pairings_won": 19,
+  "pairings_lost": 2,
+  "pairings_tied": 0,
+  "own_refused_moves": 0,
+  "errors": 0,
+  "max_thinking_seconds": 56.3807,
+  "submission_sha256": "7819208444270fab6aac81a64af1e69ff2fdae5f2b81742d85747d61ad00185b",
+  "maintained_sources_sha256": {
+    "build.py": "5ef0b45d68c6f4e699652ae469d141684b2b5b142eaf9704fd489c791d042a6b",
+    "pegs.h": "2972c33a83ae835c52a16e6b9db3f3f43573702542b518056af94e6b10f0893d",
+    "pegs_classic.h": "49a1145d941ada9f84b0a1c8bafaa4fdbdcd0c07738f6905011d542e11f594d1",
+    "bands.h": "417063071c9bb786b9c8437ad9b542b027f4b9cff097bc3cef24a458fdfd837a",
+    "bot.cpp": "8708bb6d96df855ec701544852197c919fe844d69dd1b7f63338c6f57ccc3de1"
+  },
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "reports": [
+    "final-selfplay",
+    "final-defender",
+    "final-symmetry",
+    "final-official"
+  ],
+  "single_cpp_report": "final-single-cpp/report.json"
+}

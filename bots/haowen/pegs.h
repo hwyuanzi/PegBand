@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdlib>
+#include <initializer_list>
 #include <limits>
 #include <numeric>
 #include <utility>
@@ -55,9 +56,9 @@ inline Bits raster(std::array<P,3> h,int size,int n) {
     return out;
 }
 struct Shape {std::array<P,3> h;int size;Bits cover;};
-inline bool make_shape(const std::vector<int>& ids,const std::vector<int>& enemy,int n,Shape& s) {
+inline bool make_shape(std::initializer_list<int> ids,const std::vector<int>& enemy,int n,Shape& s) {
     s.size=static_cast<int>(ids.size());
-    for(int i=0;i<s.size;i++)s.h[i]=point(ids[i],n);
+    int index=0;for(int id:ids)s.h[index++]=point(id,n);
     if(s.size==3) {
         int c=cross(s.h[0],s.h[1],s.h[2]);
         if(!c)return false;
@@ -74,6 +75,7 @@ struct Side {
     Bits reach;
     int n,w;
     Side(int board,const std::vector<int>& p,const std::vector<int>& e):pegs(p),enemy(e),n(board),w((board*board+63)/64) {
+        shapes.reserve(p.size()+p.size()*p.size()/2+p.size()*p.size()*p.size()/6);
         Shape s;
         for(size_t i=0;i<p.size();i++) {
             if(make_shape({p[i]},e,n,s)){shapes.push_back(s);reach.add(s.cover,w);}
@@ -86,7 +88,7 @@ struct Side {
     Bits after_add(int q,std::vector<Bits>* options=nullptr) const {
         Bits b=reach;Shape s;
         if(options){options->reserve(shapes.size()+pegs.size()*pegs.size()/2+1);for(const auto& t:shapes)options->push_back(t.cover);}
-        auto push=[&](std::vector<int> ids){if(make_shape(ids,enemy,n,s)){b.add(s.cover,w);if(options)options->push_back(s.cover);}};
+        auto push=[&](std::initializer_list<int> ids){if(make_shape(ids,enemy,n,s)){b.add(s.cover,w);if(options)options->push_back(s.cover);}};
         push({q});
         for(size_t i=0;i<pegs.size();i++){
             push({q,pegs[i]});
@@ -117,8 +119,22 @@ inline double limited_score(const Bits& reach,const std::vector<Bits>& options,i
 struct Scored {double value;int p;};
 class Search {
     int n,k,r,w;
+    bool exact_game=false, endgames=true;
     std::chrono::steady_clock::time_point deadline;
     mutable std::unordered_map<uint64_t,double> terminal_cache;
+    mutable std::unordered_map<uint64_t,std::vector<Scored>> move_cache;
+    struct Entry {double value;int depth,flag,move;};
+    mutable std::unordered_map<uint64_t,Entry> table;
+    static uint64_t mix(uint64_t x) {
+        x+=0x9e3779b97f4a7c15ULL;x=(x^(x>>30))*0xbf58476d1ce4e5b9ULL;
+        x=(x^(x>>27))*0x94d049bb133111ebULL;return x^(x>>31);
+    }
+    uint64_t key(const std::vector<int>& a,const std::vector<int>& b)const {
+        uint64_t h=0;
+        for(int p:a)h^=mix(uint64_t(p)+1);
+        for(int p:b)h^=mix(uint64_t(p)+4097);
+        return h;
+    }
     bool timed()const{return std::chrono::steady_clock::now()>=deadline;}
     double structure(const std::vector<int>& mine,int q)const {
         // A potential peg must still support future play when fewer than three pegs exist.
@@ -143,6 +159,9 @@ class Search {
         return c;
     }
     std::vector<Scored> rank(const std::vector<int>& a,const std::vector<int>& b,bool full,int limit)const {
+        uint64_t hash=key(a,b)^mix(8192+2*limit+int(full));
+        auto cached=move_cache.find(hash);
+        if(cached!=move_cache.end())return cached->second;
         Side own(n,a,b),enemy(n,b,a);std::vector<Scored> out;
         auto cand=candidates(a,b,full);out.reserve(cand.size());
         for(int q:cand) {
@@ -156,7 +175,10 @@ class Search {
             if((out.size()&31)==0&&timed())break;
         }
         std::sort(out.begin(),out.end(),[](const Scored&x,const Scored&y){return x.value!=y.value?x.value>y.value:x.p<y.p;});
-        if(static_cast<int>(out.size())<=limit)return out;
+        if(static_cast<int>(out.size())<=limit) {
+            if(!timed()&&move_cache.size()<40000)move_cache.emplace(hash,out);
+            return out;
+        }
         // Nearby cells frequently have the same tactical idea. Keep a few precise
         // leaders, then reserve beam slots for different regions of the board.
         std::vector<Scored> diverse;
@@ -174,17 +196,14 @@ class Search {
             if(static_cast<int>(diverse.size())==limit)break;
             if(std::none_of(diverse.begin(),diverse.end(),[&](const Scored& t){return t.p==s.p;}))diverse.push_back(s);
         }
+        if(!timed()&&move_cache.size()<40000)move_cache.emplace(hash,diverse);
         return diverse;
     }
     double final_value(const std::vector<int>& a,const std::vector<int>& b)const {
-        uint64_t key=1469598103934665603ULL;
-        std::vector<int> sa=a,sb=b;std::sort(sa.begin(),sa.end());std::sort(sb.begin(),sb.end());
-        for(int p:sa)key=(key^uint64_t(p+1))*1099511628211ULL;
-        key=(key^uint64_t(4095))*1099511628211ULL;
-        for(int p:sb)key=(key^uint64_t(p+1))*1099511628211ULL;
-        auto found=terminal_cache.find(key);if(found!=terminal_cache.end())return found->second;
+        uint64_t hash=key(a,b);
+        auto found=terminal_cache.find(hash);if(found!=terminal_cache.end())return found->second;
         auto x=pegband::solve_bands(n,a,b,r,.012),y=pegband::solve_bands(n,b,a,r,.012);
-        double result=x.score-y.score;terminal_cache.emplace(key,result);return result;
+        double result=x.score-y.score;terminal_cache.emplace(hash,result);return result;
     }
     double visit(const std::vector<int>& a,const std::vector<int>& b,int depth,double alpha,double beta)const {
         if(timed())return 0;
@@ -193,23 +212,55 @@ class Search {
             return -visit(b,a,depth, -beta,-alpha);
         }
         bool terminal=static_cast<int>(a.size())==k-1&&static_cast<int>(b.size())==k;
-        auto moves=rank(a,b,terminal,terminal?24:(depth<=1?1:6));
+        uint64_t hash=key(a,b);double original_alpha=alpha,original_beta=beta;
+        int preferred=-1;
+        auto cached=table.find(hash);
+        if(cached!=table.end()) {
+            preferred=cached->second.move;
+            if(cached->second.depth>=depth) {
+                const auto& e=cached->second;
+                if(e.flag==0)return e.value;
+                if(e.flag==1)alpha=std::max(alpha,e.value);
+                else beta=std::min(beta,e.value);
+                if(alpha>=beta)return e.value;
+            }
+        }
+        // Exact final replies prevent the beam from overlooking a blocking
+        // square. The static ordering still makes alpha-beta cutoffs cheap.
+        bool all_terminal=terminal&&n<=20&&k<=8;
+        auto moves=rank(a,b,terminal||exact_game,(all_terminal||exact_game)?n*n:(terminal?24:6));
         if(moves.empty())return 0;
         if(depth<=1&&!terminal)return moves[0].value;
-        double best=-1e100;
+        auto first=std::find_if(moves.begin(),moves.end(),[&](const Scored& s){return s.p==preferred;});
+        if(first!=moves.end())std::rotate(moves.begin(),first,first+1);
+        double best=-1e100;int best_move=moves[0].p;
         for(const auto& s:moves) {
             std::vector<int> aa=a;aa.push_back(s.p);
             double value=terminal?final_value(aa,b):-visit(b,aa,depth-1,-beta,-alpha);
             if(timed())return 0;
-            best=std::max(best,value);alpha=std::max(alpha,value);
+            if(value>best){best=value;best_move=s.p;}
+            alpha=std::max(alpha,value);
             if(alpha>=beta)break;
         }
+        int flag=best<=original_alpha?2:(best>=original_beta?1:0);
+        if(table.size()<80000)table[hash]={best,depth,flag,best_move};
         return best;
     }
 public:
     Search(int board,int pegs,int bands,double seconds):n(board),k(pegs),r(bands),w((board*board+63)/64),deadline(std::chrono::steady_clock::now()+std::chrono::milliseconds(int(seconds*1000))){}
     int choose(const std::vector<int>& a,const std::vector<int>& b) {
-        auto root=rank(a,b,true,static_cast<int>(b.size())>=k?48:24);
+        int remaining=2*k-static_cast<int>(a.size()+b.size());
+        exact_game=endgames&&remaining<=4&&(n<=12&&k<=6);
+        int hint=-1;
+        if(exact_game&&remaining>=3) {
+            double left=std::chrono::duration<double>(deadline-std::chrono::steady_clock::now()).count();
+            Search fallback(n,k,r,std::min(.75,std::max(.001,left*.15)));
+            fallback.endgames=false;hint=fallback.choose(a,b);
+        }
+        int root_limit=static_cast<int>(b.size())>=k?256:24;
+        if((remaining==1&&n<=30&&k<=10)||(remaining==2&&n<=20&&k<=8))root_limit=n*n;
+        if(exact_game)root_limit=n*n;
+        auto root=rank(a,b,true,root_limit);
         if(root.empty())return 0;
         if(k==1)return root[0].p;
         if(a.size()<2&&k>=3) {
@@ -222,8 +273,9 @@ public:
                 root.push_back({v,p});
             }
         }
+        auto preferred=std::find_if(root.begin(),root.end(),[&](const Scored& s){return s.p==hint;});
+        if(preferred!=root.end())std::rotate(root.begin(),preferred,preferred+1);
         int answer=root[0].p;
-        int remaining=2*k-static_cast<int>(a.size()+b.size());
         if(static_cast<int>(b.size())>=k) {
             double best=-1e100;
             // Small last-move positions are cheap enough to compare every
@@ -241,19 +293,25 @@ public:
         // Iterative deepening gives every root candidate the same completed
         // horizon. Discard the partial iteration when its deadline is reached.
         int maxdepth=std::min(remaining,k<=8?7:5);
-        for(int depth=2;depth<=maxdepth;depth++) {
+        for(int depth=exact_game?remaining:2;depth<=maxdepth;depth++) {
             double best=-1e100;int candidate=answer;bool complete=true;
             std::vector<Scored> reordered;
             for(const auto& s:root) {
                 std::vector<int> aa=a;aa.push_back(s.p);
                 double value=-visit(b,aa,depth-1,-1e100,-best);
                 if(timed()){complete=false;break;}
-                // The static score only breaks equal lookahead values.
-                value+=s.value*.00001;
+                // Preserve the previous best on ties; a cutoff may only have
+                // proved that another root cannot improve on its value.
                 reordered.push_back({value,s.p});
-                if(value>best){best=value;candidate=s.p;}
+                if(value>best||(value==best&&s.p==answer)){best=value;candidate=s.p;}
             }
-            if(!complete)break;
+            if(!complete) {
+                // With only two placements left, each fully searched root
+                // has an actual worst-reply score. Keep improvements already
+                // proved before the deadline even if some roots remain.
+                if((remaining==2||exact_game)&&!reordered.empty())answer=candidate;
+                break;
+            }
             answer=candidate;
             std::stable_sort(reordered.begin(),reordered.end(),[](const Scored&x,const Scored&y){return x.value>y.value;});
             // Preserve the static scores, while trying the previous best first.

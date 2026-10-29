@@ -1,0 +1,46 @@
+{
+  "bot": "Haowen Aegis single cpp",
+  "opponent": "Greedy (Python)",
+  "params": {
+    "N": 10,
+    "pegs": 5,
+    "bands": 5
+  },
+  "games": [
+    {
+      "color": "green",
+      "score": 85,
+      "opponent_score": 26,
+      "winner_on_score": "Haowen Aegis single cpp",
+      "thinking_seconds": 11.3574,
+      "opponent_thinking_seconds": 0.0318,
+      "error": null,
+      "opponent_error": null,
+      "refused_moves": 0,
+      "opponent_refused_moves": 0,
+      "finished": true
+    },
+    {
+      "color": "blue",
+      "score": 82,
+      "opponent_score": 49,
+      "winner_on_score": "Haowen Aegis single cpp",
+      "thinking_seconds": 8.4165,
+      "opponent_thinking_seconds": 0.0334,
+      "error": null,
+      "opponent_error": null,
+      "refused_moves": 0,
+      "opponent_refused_moves": 0,
+      "finished": true
+    }
+  ],
+  "total_score": 167,
+  "opponent_total": 75,
+  "margin": 92,
+  "winner": "Haowen Aegis single cpp",
+  "all_moves_legal": true,
+  "clean_match": true,
+  "source_sha256": "7819208444270fab6aac81a64af1e69ff2fdae5f2b81742d85747d61ad00185b",
+  "isolated_build": "c++ -std=c++17 -O2 -Wall -Wextra -pedantic bot.cpp -o bot",
+  "only_input_file": "bot.cpp"
+}

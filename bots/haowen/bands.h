@@ -161,17 +161,19 @@ inline Bits coverage(int n,const Hull& ids,const Hull& enemy) {
     for(int id:ids)if(id<0 || id>=n*n)return bits;
     auto h=convex_hull(n,ids);
     if(h.size()==1) bits[h[0].square/64]|=uint64_t(1)<<(h[0].square%64);
+    else if(h.size()==2)bits=segment_raster(n,h[0],h[1]);
     else {
-        int minx=n,miny=n,maxx=0,maxy=0;
-        for(const Point&p:h){minx=std::min(minx,p.x);miny=std::min(miny,p.y);maxx=std::max(maxx,p.x);maxy=std::max(maxy,p.y);}
-        for(int y=miny;y<=maxy;++y)for(int x=minx;x<=maxx;++x) {
-            bool hit=false;
-            size_t edges=h.size()==2?1:h.size();
-            for(size_t i=0;i<edges;++i)
-                if(segment_hits_cell(h[i],h[(i+1)%h.size()],x,y)){hit=true;break;}
-            if(!hit && h.size()>2)hit=contains(h,{x,y,y*n+x});
-            if(hit){int id=y*n+x;bits[id/64]|=uint64_t(1)<<(id%64);}
+        // A covered cell either contains part of an edge or its center is
+        // inside the hull. Scan rows for each edge instead of clipping every
+        // cell against every edge; this also accelerates terminal search.
+        Bits inside(bits.size(),~uint64_t(0));
+        if(n*n%64)inside.back()=(uint64_t(1)<<(n*n%64))-1;
+        for(size_t i=0;i<h.size();++i) {
+            Bits edge=segment_raster(n,h[i],h[(i+1)%h.size()]);
+            Bits left=left_halfplane(n,h[i],h[(i+1)%h.size()]);
+            for(size_t w=0;w<bits.size();++w){bits[w]|=edge[w];inside[w]&=left[w];}
         }
+        unite(bits,inside);
     }
     for(int id:enemy)if(id>=0 && id<n*n)bits[id/64]&=~(uint64_t(1)<<(id%64));
     return bits;

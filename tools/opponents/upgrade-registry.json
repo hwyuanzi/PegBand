@@ -1,0 +1,32 @@
+[
+  {
+    "name": "haowen",
+    "cwd": "../../bots/haowen",
+    "command": ["./bot"],
+    "build": ["{python}", "build.py"]
+  },
+  {
+    "name": "Aegis v1",
+    "cwd": "aegis_v1",
+    "command": ["./bot"],
+    "build": ["c++", "-std=c++17", "-O2", "bot.cpp", "-o", "bot"]
+  },
+  {
+    "name": "Aegis v1 rotated",
+    "cwd": "aegis_v1",
+    "command": ["{python}", "../symmetry.py", "1", "./bot"],
+    "build": ["c++", "-std=c++17", "-O2", "bot.cpp", "-o", "bot"]
+  },
+  {
+    "name": "Aegis v1 reflected",
+    "cwd": "aegis_v1",
+    "command": ["{python}", "../symmetry.py", "4", "./bot"],
+    "build": ["c++", "-std=c++17", "-O2", "bot.cpp", "-o", "bot"]
+  },
+  {
+    "name": "Defender",
+    "cwd": ".",
+    "command": ["./defender"],
+    "build": ["c++", "-std=c++17", "-O2", "defender.cpp", "-o", "defender"]
+  }
+]

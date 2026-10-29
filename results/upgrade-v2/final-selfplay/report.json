@@ -1,0 +1,291 @@
+{
+  "created_utc": "20261029T173413Z",
+  "clock_seconds": 120.0,
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "python_version": "3.14.7",
+  "bot_environment": {},
+  "sources_sha256": {
+    "haowen": {
+      "bands.h": "417063071c9bb786b9c8437ad9b542b027f4b9cff097bc3cef24a458fdfd837a",
+      "bot.cpp": "8708bb6d96df855ec701544852197c919fe844d69dd1b7f63338c6f57ccc3de1",
+      "build.py": "5ef0b45d68c6f4e699652ae469d141684b2b5b142eaf9704fd489c791d042a6b",
+      "pegs.h": "2972c33a83ae835c52a16e6b9db3f3f43573702542b518056af94e6b10f0893d",
+      "pegs_classic.h": "49a1145d941ada9f84b0a1c8bafaa4fdbdcd0c07738f6905011d542e11f594d1"
+    },
+    "Aegis v1": {
+      "bot.cpp": "f647d677e9ffcd2e00121fbe19b4abc55fbca1e31d75d42cbeb8b280f46b643a"
+    }
+  },
+  "matches": [
+    {
+      "bot": "haowen",
+      "opponent": "Aegis v1",
+      "params": {
+        "N": 10,
+        "pegs": 5,
+        "bands": 5
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 65,
+          "opponent_score": 68,
+          "winner_on_score": "Aegis v1",
+          "thinking_seconds": 16.6879,
+          "opponent_thinking_seconds": 8.637,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 69,
+          "opponent_score": 62,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 12.6944,
+          "opponent_thinking_seconds": 5.5802,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 134,
+      "opponent_total": 130,
+      "margin": 4,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/01-n10-k5-r5/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/01-n10-k5-r5/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Aegis v1",
+      "params": {
+        "N": 10,
+        "pegs": 5,
+        "bands": 1
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 19,
+          "opponent_score": 22,
+          "winner_on_score": "Aegis v1",
+          "thinking_seconds": 5.0416,
+          "opponent_thinking_seconds": 4.2994,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 50,
+          "opponent_score": 25,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 3.9467,
+          "opponent_thinking_seconds": 2.0864,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 69,
+      "opponent_total": 47,
+      "margin": 22,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/02-n10-k5-r1/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/02-n10-k5-r1/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Aegis v1",
+      "params": {
+        "N": 20,
+        "pegs": 8,
+        "bands": 6
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 247,
+          "opponent_score": 251,
+          "winner_on_score": "Aegis v1",
+          "thinking_seconds": 27.1925,
+          "opponent_thinking_seconds": 21.7801,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 284,
+          "opponent_score": 263,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 18.906,
+          "opponent_thinking_seconds": 20.1252,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 531,
+      "opponent_total": 514,
+      "margin": 17,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/03-n20-k8-r6/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/03-n20-k8-r6/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Aegis v1",
+      "params": {
+        "N": 20,
+        "pegs": 8,
+        "bands": 1
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 83,
+          "opponent_score": 109,
+          "winner_on_score": "Aegis v1",
+          "thinking_seconds": 18.1785,
+          "opponent_thinking_seconds": 17.0471,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 144,
+          "opponent_score": 95,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 16.7622,
+          "opponent_thinking_seconds": 20.2763,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 227,
+      "opponent_total": 204,
+      "margin": 23,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/04-n20-k8-r1/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/04-n20-k8-r1/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Aegis v1",
+      "params": {
+        "N": 50,
+        "pegs": 20,
+        "bands": 20
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 2255,
+          "opponent_score": 2351,
+          "winner_on_score": "Aegis v1",
+          "thinking_seconds": 55.0214,
+          "opponent_thinking_seconds": 51.9425,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 2345,
+          "opponent_score": 2270,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 56.3807,
+          "opponent_thinking_seconds": 54.8852,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 4600,
+      "opponent_total": 4621,
+      "margin": -21,
+      "winner": "Aegis v1",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/05-n50-k20-r20/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/05-n50-k20-r20/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Aegis v1",
+      "params": {
+        "N": 50,
+        "pegs": 20,
+        "bands": 1
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 420,
+          "opponent_score": 517,
+          "winner_on_score": "Aegis v1",
+          "thinking_seconds": 55.8371,
+          "opponent_thinking_seconds": 59.1357,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 494,
+          "opponent_score": 297,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 54.7334,
+          "opponent_thinking_seconds": 61.3969,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 914,
+      "opponent_total": 814,
+      "margin": 100,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/06-n50-k20-r1/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-selfplay/06-n50-k20-r1/results.json"
+    }
+  ]
+}

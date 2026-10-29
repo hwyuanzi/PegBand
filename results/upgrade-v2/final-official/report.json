@@ -1,0 +1,297 @@
+{
+  "created_utc": "20261029T174033Z",
+  "clock_seconds": 120.0,
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "python_version": "3.14.7",
+  "bot_environment": {},
+  "sources_sha256": {
+    "haowen": {
+      "bands.h": "417063071c9bb786b9c8437ad9b542b027f4b9cff097bc3cef24a458fdfd837a",
+      "bot.cpp": "8708bb6d96df855ec701544852197c919fe844d69dd1b7f63338c6f57ccc3de1",
+      "build.py": "5ef0b45d68c6f4e699652ae469d141684b2b5b142eaf9704fd489c791d042a6b",
+      "pegs.h": "2972c33a83ae835c52a16e6b9db3f3f43573702542b518056af94e6b10f0893d",
+      "pegs_classic.h": "49a1145d941ada9f84b0a1c8bafaa4fdbdcd0c07738f6905011d542e11f594d1"
+    },
+    "Spread (Python)": {
+      "bot.py": "de59a47e0d6494bb82e3a5f2d16b513738d88114ff99b1398c6bd76ba8d983b6"
+    },
+    "Greedy (Python)": {
+      "bot.py": "06f31146244ff3c2a3d69e8ecdefae8b76537b790876e7121059ed216f198156"
+    },
+    "Random (Python)": {
+      "bot.py": "9c12d649b72de5e68bc0b0248be0f3cb5d88e99c7f4861dc1deabc5f7246bb8a"
+    }
+  },
+  "matches": [
+    {
+      "bot": "haowen",
+      "opponent": "Spread (Python)",
+      "params": {
+        "N": 10,
+        "pegs": 5,
+        "bands": 5
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 78,
+          "opponent_score": 28,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 15.7873,
+          "opponent_thinking_seconds": 0.0015,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 81,
+          "opponent_score": 23,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 7.3407,
+          "opponent_thinking_seconds": 0.0015,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 159,
+      "opponent_total": 51,
+      "margin": 108,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/01-n10-k5-r5/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/01-n10-k5-r5/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Greedy (Python)",
+      "params": {
+        "N": 10,
+        "pegs": 5,
+        "bands": 5
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 85,
+          "opponent_score": 26,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 11.2436,
+          "opponent_thinking_seconds": 0.0319,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 82,
+          "opponent_score": 49,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 8.4189,
+          "opponent_thinking_seconds": 0.0334,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 167,
+      "opponent_total": 75,
+      "margin": 92,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/02-n10-k5-r5/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/02-n10-k5-r5/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Random (Python)",
+      "params": {
+        "N": 10,
+        "pegs": 5,
+        "bands": 5
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 82,
+          "opponent_score": 17,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 16.0544,
+          "opponent_thinking_seconds": 0.0011,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 76,
+          "opponent_score": 15,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 10.8136,
+          "opponent_thinking_seconds": 0.0012,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 158,
+      "opponent_total": 32,
+      "margin": 126,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/03-n10-k5-r5/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/03-n10-k5-r5/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Spread (Python)",
+      "params": {
+        "N": 20,
+        "pegs": 8,
+        "bands": 6
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 310,
+          "opponent_score": 63,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 16.465,
+          "opponent_thinking_seconds": 0.0088,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 354,
+          "opponent_score": 132,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 15.8623,
+          "opponent_thinking_seconds": 0.0053,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 664,
+      "opponent_total": 195,
+      "margin": 469,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/04-n20-k8-r6/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/04-n20-k8-r6/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Greedy (Python)",
+      "params": {
+        "N": 20,
+        "pegs": 8,
+        "bands": 6
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 303,
+          "opponent_score": 148,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 23.0272,
+          "opponent_thinking_seconds": 0.5125,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 350,
+          "opponent_score": 141,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 16.6421,
+          "opponent_thinking_seconds": 0.8405,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 653,
+      "opponent_total": 289,
+      "margin": 364,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/05-n20-k8-r6/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/05-n20-k8-r6/results.json"
+    },
+    {
+      "bot": "haowen",
+      "opponent": "Random (Python)",
+      "params": {
+        "N": 20,
+        "pegs": 8,
+        "bands": 6
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 307,
+          "opponent_score": 77,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 19.1826,
+          "opponent_thinking_seconds": 0.0028,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 325,
+          "opponent_score": 63,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 18.6639,
+          "opponent_thinking_seconds": 0.0031,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 1,
+          "finished": true
+        }
+      ],
+      "total_score": 632,
+      "opponent_total": 140,
+      "margin": 492,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/06-n20-k8-r6/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/upgrade-v2/final-official/06-n20-k8-r6/results.json"
+    }
+  ]
+}

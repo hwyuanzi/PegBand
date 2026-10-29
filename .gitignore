@@ -10,5 +10,7 @@ bots/haowen/bot
 bots/haowen/bot.exe
 tools/opponents/defender
 tools/opponents/defender.exe
+tools/opponents/aegis_v1/bot
+tools/opponents/aegis_v1/bot.exe
 bots/samples/*/bot
 bots/samples/*/bot.exe

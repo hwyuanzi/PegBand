@@ -270,6 +270,129 @@ class BotProtocol(unittest.TestCase):
         finally:
             session.close()
 
+    def test_penultimate_green_peg_accounts_for_every_blue_reply(self):
+        # Old beam search missed the optimal defense in both positions.
+        n, k, bands = 6, 3, 1
+        cases = [([28, 12], [15, 26]), ([3, 19], [13, 9])]
+        from functools import lru_cache
+        @lru_cache(None)
+        def best_band(mine, enemy):
+            return max(len(oracle(n, subset, enemy)[1])
+                       for count in range(1, len(mine)+1)
+                       for subset in itertools.combinations(mine, count)
+                       if oracle(n, subset, enemy)[0])
+        session = BotSession(self.bot)
+        try:
+            session.start()
+            session.ask({"type": "start", "N": n, "pegs": k,
+                         "bands": bands, "clock": 120}, 30)
+            for mine, enemy in cases:
+                values = {}
+                for q in set(range(n*n)) - set(mine+enemy):
+                    a = tuple(sorted(mine+[q]))
+                    values[q] = min(best_band(a, tuple(sorted(enemy+[t]))) -
+                                    best_band(tuple(sorted(enemy+[t])), a)
+                                    for t in set(range(n*n)) - set(a) - set(enemy))
+                game = Game(make_config(n, k, bands))
+                game.pegs = [[divmod(i, n) for i in mine],
+                             [divmod(i, n) for i in enemy]]
+                game.turn, game.round = GREEN, k-1
+                reply, _ = session.ask(dict(game.state(), type="peg"), 15)
+                with self.subTest(mine=mine, enemy=enemy):
+                    self.assertEqual(values[reply["peg"]], max(values.values()))
+        finally:
+            session.close()
+
+    def test_four_placement_endgame_matches_exhaustive_game_tree(self):
+        from functools import lru_cache
+        n, k = 3, 3
+        @lru_cache(None)
+        def best_band(mine, enemy):
+            return max(len(oracle(n, subset, enemy)[1])
+                       for count in range(1, len(mine)+1)
+                       for subset in itertools.combinations(mine, count)
+                       if oracle(n, subset, enemy)[0])
+        @lru_cache(None)
+        def value(mine, enemy):
+            if len(mine) == k and len(enemy) == k:
+                return best_band(mine, enemy)-best_band(enemy, mine)
+            if len(mine) == k:
+                return -value(enemy, mine)
+            return max(-value(enemy, tuple(sorted(mine+(q,))))
+                       for q in set(range(n*n))-set(mine)-set(enemy))
+        session = BotSession(self.bot)
+        try:
+            session.start()
+            session.ask({"type": "start", "N": n, "pegs": k,
+                         "bands": 1, "clock": 120}, 30)
+            for first, second in [(0, 8), (0, 4), (1, 7), (4, 0), (3, 1)]:
+                game = Game(make_config(n, k, 1))
+                game.pegs = [[divmod(first, n)], [divmod(second, n)]]
+                game.turn, game.round = GREEN, 1
+                reply, _ = session.ask(dict(game.state(), type="peg"), 15)
+                chosen = reply["peg"]
+                self.assertNotIn(chosen, [first, second])
+                with self.subTest(first=first, second=second):
+                    self.assertEqual(-value((second,), tuple(sorted((first, chosen)))),
+                                     value((first,), (second,)))
+        finally:
+            session.close()
+
+    def test_medium_final_blue_does_not_prune_the_best_square(self):
+        n, k, bands = 20, 8, 6
+        mine = [37, 236, 398, 75, 259, 2, 209]
+        enemy = [140, 343, 153, 139, 82, 249, 294, 192]
+        def exact_score(pegs, opponents):
+            # Independent exhaustive maximum coverage over legal hulls;
+            # dominance and a marginal bound only prune impossible improvements.
+            covers = [oracle(n, subset, opponents)[1]
+                      for count in range(1, len(pegs)+1)
+                      for subset in itertools.combinations(pegs, count)
+                      if oracle(n, subset, opponents)[0]]
+            def popcount(mask):
+                return bin(mask).count("1")
+            masks = sorted({sum(1 << q for q in cover) for cover in covers},
+                           key=popcount, reverse=True)
+            maximal = []
+            for mask in masks:
+                if all(mask & ~other for other in maximal):
+                    maximal.append(mask)
+            target = 0
+            for mask in maximal:
+                target |= mask
+            used = 0
+            for _ in range(bands):
+                used |= max(maximal, key=lambda mask: popcount(mask & ~used))
+            best = popcount(used)
+            def search(start, slots, used):
+                nonlocal best
+                best = max(best, popcount(used))
+                if not slots or best == popcount(target):
+                    return
+                options = [popcount(mask & ~used) for mask in maximal[start:]]
+                if popcount(used)+sum(sorted(options, reverse=True)[:slots]) <= best:
+                    return
+                for i in range(start, len(maximal)):
+                    search(i+1, slots-1, used | maximal[i])
+            search(0, bands, 0)
+            return best
+        session = BotSession(self.bot)
+        try:
+            session.start()
+            session.ask({"type": "start", "N": n, "pegs": k,
+                         "bands": bands, "clock": 120}, 30)
+            game = Game(make_config(n, k, bands))
+            game.pegs = [[divmod(i, n) for i in enemy],
+                         [divmod(i, n) for i in mine]]
+            game.turn, game.round = BLUE, k-1
+            reply, _ = session.ask(dict(game.state(), type="peg"), 15)
+            chosen = reply["peg"]
+            self.assertNotIn(chosen, mine+enemy)
+            self.assertGreaterEqual(exact_score(mine+[chosen], enemy) -
+                                    exact_score(enemy, mine+[chosen]), 100)
+        finally:
+            session.close()
+
     def test_maximum_board_band_protocol_all_twenty_rounds(self):
         n, k, count = 50, 20, 20
         rng = random.Random(1483)

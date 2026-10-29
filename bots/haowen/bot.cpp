@@ -4,6 +4,7 @@
 #include <string>
 #include "bands.h"
 #include "pegs.h"
+#include "pegs_classic.h"
 
 namespace json {
 // The referee sends only integer scalars, strings, and arrays. Accept whitespace
@@ -46,11 +47,20 @@ struct Bot {
     int peg(const std::string&line) {
         auto a=json::array(line,"your_pegs"),b=json::array(line,"their_pegs");
         int left=std::max(1,k-static_cast<int>(a.size()));
-        double budget=std::min(4.0,std::max(.05,(remaining-8.0)/left*.80));
+        // The last placement can use actual terminal band scores. Reserve
+        // extra time for that decisive search, rather than deeper early
+        // searches whose leaf evaluations still approximate the final game.
+        bool conservative=(n>30||k>10)&&2*r>=k&&static_cast<int>(b.size())<k;
+        double cap=conservative?4.0:(left==1?18.0:(left==2&&n<=12&&k<=6?12.0:4.0));
+        double budget=std::min(cap,std::max(.05,(remaining-8.0)/left*.80));
         if(const char* e=std::getenv("PEGBAND_SECONDS"))budget=std::min(budget,std::max(.01,std::atof(e)));
         auto begin=std::chrono::steady_clock::now();
-        placement::Search search(n,k,r,budget);
-        int q=search.choose(a,b);
+        int q;
+        if(conservative) {
+            classical_placement::Search search(n,k,r,budget);q=search.choose(a,b);
+        } else {
+            placement::Search search(n,k,r,budget);q=search.choose(a,b);
+        }
         remaining-=std::chrono::duration<double>(std::chrono::steady_clock::now()-begin).count()+.003;
         return q;
     }
