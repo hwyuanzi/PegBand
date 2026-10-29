@@ -1,0 +1,93 @@
+{
+  "created_utc": "2026-10-29T04:51:02.316269+00:00",
+  "clock_seconds": 120,
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "bot_environment": {},
+  "sources_sha256": {
+    "bots/haowen/bot.cpp": "b8701072a559e34e7bca6d750f26c27b82e2ae203b445911828646cdf41bee83",
+    "bots/haowen/pegs.h": "27482ec385197ba52d3e4f02fac324e2e54054841911e98f8d89f2bad6c337aa",
+    "bots/haowen/bands.h": "cd862fd00891ec2e3f16a6df3175cf02c0b97a3c10d2024aecfc3a5ce95f028c",
+    "tools/opponents/defender.cpp": "fba8998ed95c7f8c1e0c0857287c6e8a8621e7050f6bd476fab9b75ac319743c"
+  },
+  "build_commands": [
+    [
+      "c++",
+      "-std=c++17",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/bots/haowen/bot.cpp",
+      "-o",
+      "/tmp/pegband-final-max-r1-uv0w_n9p/aegis"
+    ],
+    [
+      "c++",
+      "-std=c++17",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/tools/opponents/defender.cpp",
+      "-o",
+      "/tmp/pegband-final-max-r1-uv0w_n9p/defender"
+    ]
+  ],
+  "binary_sha256": {
+    "aegis": "96b0d45163972dd14f5035d5105ff9db44040181715b30517979b26dbb2e59b3",
+    "defender": "ca4b866a23971017138e55582b097473238b2624a0b792528483eb6d0da731c9"
+  },
+  "matches": [
+    {
+      "bot": "haowen",
+      "opponent": "Defender",
+      "params": {
+        "N": 50,
+        "pegs": 20,
+        "bands": 1
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 927,
+          "opponent_score": 392,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 57.2243,
+          "opponent_thinking_seconds": 0.4459,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 737,
+          "opponent_score": 446,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 55.4654,
+          "opponent_thinking_seconds": 0.4337,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 1664,
+      "opponent_total": 838,
+      "margin": 826,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/final-max-r1/match/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/final-max-r1/match/results.json"
+    }
+  ],
+  "elapsed_wall_seconds": 113.73304691700105,
+  "sources_sha256_after": {
+    "bots/haowen/bot.cpp": "b8701072a559e34e7bca6d750f26c27b82e2ae203b445911828646cdf41bee83",
+    "bots/haowen/pegs.h": "27482ec385197ba52d3e4f02fac324e2e54054841911e98f8d89f2bad6c337aa",
+    "bots/haowen/bands.h": "cd862fd00891ec2e3f16a6df3175cf02c0b97a3c10d2024aecfc3a5ce95f028c",
+    "tools/opponents/defender.cpp": "fba8998ed95c7f8c1e0c0857287c6e8a8621e7050f6bd476fab9b75ac319743c"
+  },
+  "sources_unchanged": true
+}

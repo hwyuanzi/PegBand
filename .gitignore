@@ -5,5 +5,10 @@ bots.local.json
 bots/*/
 !bots/samples/
 !bots/templates/
+!bots/haowen/
+bots/haowen/bot
+bots/haowen/bot.exe
+tools/opponents/defender
+tools/opponents/defender.exe
 bots/samples/*/bot
 bots/samples/*/bot.exe

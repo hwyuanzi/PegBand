@@ -1,0 +1,196 @@
+{
+  "created_utc": "2026-10-29T04:48:58.745326+00:00",
+  "clock_seconds": 120,
+  "move_cap_seconds": 4,
+  "snapshot": "/tmp/pegband-final-research",
+  "sha256": {
+    "pegs.h": "27482ec385197ba52d3e4f02fac324e2e54054841911e98f8d89f2bad6c337aa",
+    "defender.cpp": "d2acc5b82cfd620a58ad88d3d4cb4487c5d7ceb3df08c97537ea1bf6c399354b",
+    "bands.h": "cd862fd00891ec2e3f16a6df3175cf02c0b97a3c10d2024aecfc3a5ce95f028c",
+    "bot": "9d77e01a86f1c0b45f4cae12a4b872335f6ff2d37a2031ed57237dcb39628923",
+    "bot.cpp": "b8701072a559e34e7bca6d750f26c27b82e2ae203b445911828646cdf41bee83",
+    "defender": "ca4b866a23971017138e55582b097473238b2624a0b792528483eb6d0da731c9"
+  },
+  "matches": [
+    {
+      "bot": "Aegis final",
+      "opponent": "Defender final",
+      "params": {
+        "N": 10,
+        "pegs": 5,
+        "bands": 5
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 68,
+          "opponent_score": 59,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 4.7695,
+          "opponent_thinking_seconds": 0.0031,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 80,
+          "opponent_score": 57,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 7.868,
+          "opponent_thinking_seconds": 0.002,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 148,
+      "opponent_total": 116,
+      "margin": 32,
+      "winner": "Aegis final",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n10-k5-r5/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n10-k5-r5/results.json"
+    },
+    {
+      "bot": "Aegis final",
+      "opponent": "Defender final",
+      "params": {
+        "N": 20,
+        "pegs": 8,
+        "bands": 6
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 290,
+          "opponent_score": 255,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 18.4324,
+          "opponent_thinking_seconds": 0.0205,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 298,
+          "opponent_score": 214,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 18.5305,
+          "opponent_thinking_seconds": 0.0197,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 588,
+      "opponent_total": 469,
+      "margin": 119,
+      "winner": "Aegis final",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n20-k8-r6/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n20-k8-r6/results.json"
+    },
+    {
+      "bot": "Aegis final",
+      "opponent": "Defender final",
+      "params": {
+        "N": 20,
+        "pegs": 8,
+        "bands": 1
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 156,
+          "opponent_score": 107,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 18.8304,
+          "opponent_thinking_seconds": 0.0155,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 161,
+          "opponent_score": 95,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 19.5279,
+          "opponent_thinking_seconds": 0.0147,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 317,
+      "opponent_total": 202,
+      "margin": 115,
+      "winner": "Aegis final",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n20-k8-r1/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n20-k8-r1/results.json"
+    },
+    {
+      "bot": "Aegis final",
+      "opponent": "Defender final",
+      "params": {
+        "N": 50,
+        "pegs": 20,
+        "bands": 20
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 2390,
+          "opponent_score": 2265,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 51.5904,
+          "opponent_thinking_seconds": 0.5666,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 2398,
+          "opponent_score": 2193,
+          "winner_on_score": "Aegis final",
+          "thinking_seconds": 50.2418,
+          "opponent_thinking_seconds": 0.5926,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 0,
+          "finished": true
+        }
+      ],
+      "total_score": 4788,
+      "opponent_total": 4458,
+      "margin": 330,
+      "winner": "Aegis final",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n50-k20-r20/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n50-k20-r20/results.json"
+    }
+  ]
+}

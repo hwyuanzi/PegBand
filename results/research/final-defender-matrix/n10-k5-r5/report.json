@@ -1,0 +1,45 @@
+{
+  "bot": "Aegis final",
+  "opponent": "Defender final",
+  "params": {
+    "N": 10,
+    "pegs": 5,
+    "bands": 5
+  },
+  "games": [
+    {
+      "color": "green",
+      "score": 68,
+      "opponent_score": 59,
+      "winner_on_score": "Aegis final",
+      "thinking_seconds": 4.7695,
+      "opponent_thinking_seconds": 0.0031,
+      "error": null,
+      "opponent_error": null,
+      "refused_moves": 0,
+      "opponent_refused_moves": 0,
+      "finished": true
+    },
+    {
+      "color": "blue",
+      "score": 80,
+      "opponent_score": 57,
+      "winner_on_score": "Aegis final",
+      "thinking_seconds": 7.868,
+      "opponent_thinking_seconds": 0.002,
+      "error": null,
+      "opponent_error": null,
+      "refused_moves": 0,
+      "opponent_refused_moves": 0,
+      "finished": true
+    }
+  ],
+  "total_score": 148,
+  "opponent_total": 116,
+  "margin": 32,
+  "winner": "Aegis final",
+  "all_moves_legal": true,
+  "clean_match": true,
+  "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n10-k5-r5/replay.html",
+  "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/research/final-defender-matrix/n10-k5-r5/results.json"
+}

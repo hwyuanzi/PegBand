@@ -1,0 +1,14 @@
+[
+  {
+    "name": "haowen",
+    "cwd": "../../bots/haowen",
+    "command": ["./bot"],
+    "build": ["{python}", "build.py"]
+  },
+  {
+    "name": "Defender",
+    "cwd": ".",
+    "command": ["./defender"],
+    "build": ["c++", "-std=c++17", "-O2", "defender.cpp", "-o", "defender"]
+  }
+]

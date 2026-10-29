@@ -1,0 +1,65 @@
+{
+  "created_utc": "20261029T044853Z",
+  "clock_seconds": 120.0,
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "python_version": "3.14.7",
+  "bot_environment": {},
+  "sources_sha256": {
+    "haowen": {
+      "bands.h": "cd862fd00891ec2e3f16a6df3175cf02c0b97a3c10d2024aecfc3a5ce95f028c",
+      "bot.cpp": "b8701072a559e34e7bca6d750f26c27b82e2ae203b445911828646cdf41bee83",
+      "build.py": "5ef0b45d68c6f4e699652ae469d141684b2b5b142eaf9704fd489c791d042a6b",
+      "pegs.h": "27482ec385197ba52d3e4f02fac324e2e54054841911e98f8d89f2bad6c337aa"
+    },
+    "Random (Python)": {
+      "bot.py": "9c12d649b72de5e68bc0b0248be0f3cb5d88e99c7f4861dc1deabc5f7246bb8a"
+    }
+  },
+  "matches": [
+    {
+      "bot": "haowen",
+      "opponent": "Random (Python)",
+      "params": {
+        "N": 50,
+        "pegs": 20,
+        "bands": 20
+      },
+      "games": [
+        {
+          "color": "green",
+          "score": 2417,
+          "opponent_score": 458,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 50.0178,
+          "opponent_thinking_seconds": 0.0388,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 2,
+          "finished": true
+        },
+        {
+          "color": "blue",
+          "score": 2373,
+          "opponent_score": 485,
+          "winner_on_score": "haowen",
+          "thinking_seconds": 51.4473,
+          "opponent_thinking_seconds": 0.037,
+          "error": null,
+          "opponent_error": null,
+          "refused_moves": 0,
+          "opponent_refused_moves": 1,
+          "finished": true
+        }
+      ],
+      "total_score": 4790,
+      "opponent_total": 943,
+      "margin": 3847,
+      "winner": "haowen",
+      "all_moves_legal": true,
+      "clean_match": true,
+      "replay": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/final-official/n50-random/01-n50-k20-r20/replay.html",
+      "results": "/Users/haowen/Documents/NYU/Fall_2026/Heuristic Problem Solving/Contest/PegBand/results/final-official/n50-random/01-n50-k20-r20/results.json"
+    }
+  ]
+}
